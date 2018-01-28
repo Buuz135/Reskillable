@@ -6,6 +6,7 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
+import net.minecraftforge.fml.common.Loader;
 import vazkii.skillable.skill.Skills;
 import vazkii.skillable.skill.base.Trait;
 
@@ -16,8 +17,12 @@ public class TraitPerfectRecover extends Trait {
 	}
 
 	@Override
-	public void onBlockDrops(HarvestDropsEvent event) { 
-		if(EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, event.getHarvester().getActiveItemStack()) == 0) {
+	public void onBlockDrops(HarvestDropsEvent event) {
+		if (Loader.isModLoaded("tinkersconstruct")){
+			if (!event.getHarvester().getActiveItemStack().hasTagCompound()){
+
+			}
+		} else if(EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, event.getHarvester().getActiveItemStack()) == 0) {
 			if(event.getState().getBlock() == Blocks.GLOWSTONE) {
 				event.getDrops().removeIf((s) -> s.getItem() == Items.GLOWSTONE_DUST);
 				event.getDrops().add(new ItemStack(Items.GLOWSTONE_DUST, 4));
@@ -31,5 +36,4 @@ public class TraitPerfectRecover extends Trait {
 					stack.setCount(4);
 		}
 	}
-
 }
